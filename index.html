@@ -8,6 +8,13 @@
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans antialiased">
 
+    <header class="border-b border-slate-200 bg-white">
+        <nav class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+            <span class="text-xl font-bold text-slate-900">Savings Strategy</span>
+            <a href="announcement.html" class="text-slate-600 hover:text-blue-600 font-medium text-sm transition">View announcement page →</a>
+        </nav>
+    </header>
+
     <section class="py-20 px-6 text-center">
         <h1 class="text-5xl font-extrabold mb-6 text-slate-900">Savings Feature Launch</h1>
         <p class="text-xl text-slate-600 max-w-2xl mx-auto">A strategic framework for defined success, phased rollouts, and friction-free user experience.</p>
@@ -20,7 +27,37 @@
             <p class="text-lg italic text-slate-700">"You are launching a new savings feature. How would you define success, structure the rollout, and ensure it's a simple UX?"</p>
         </section>
 
-        <section class="grid md:grid-cols-3 gap-6">
+        <section class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+            <h2 class="text-2xl font-bold mb-6">Prompt Components</h2>
+            <p class="text-slate-600 mb-6">The challenge breaks down into three core questions we address in this framework:</p>
+            <div class="space-y-4">
+                <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <span class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">1</span>
+                    <div>
+                        <h3 class="font-bold text-slate-900 mb-1">Define Success</h3>
+                        <p class="text-slate-600 text-sm">What metrics and outcomes signal that the launch is working? North star, engagement, and efficiency indicators.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <span class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">2</span>
+                    <div>
+                        <h3 class="font-bold text-slate-900 mb-1">Structure the Rollout</h3>
+                        <p class="text-slate-600 text-sm">How do we phase the launch to de-risk and validate? Alpha, Beta, and General Availability stages.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <span class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">3</span>
+                    <div>
+                        <h3 class="font-bold text-slate-900 mb-1">Ensure a Simple UX</h3>
+                        <p class="text-slate-600 text-sm">What principles keep the experience friction-free and user-centric? Progressive disclosure, one-click flows, and clear feedback.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+            <h2 class="text-2xl font-bold mb-6">1. Define Success</h2>
+            <div class="grid md:grid-cols-3 gap-6">
             <div class="bg-blue-600 p-8 rounded-2xl text-white">
                 <h3 class="font-bold text-blue-100 mb-2">North Star</h3>
                 <p class="text-2xl font-semibold">Net New Inflow / AUM</p>
@@ -33,28 +70,78 @@
                 <h3 class="font-bold text-slate-400 mb-2">Efficiency</h3>
                 <p class="text-xl">Time-to-Value (TTV)</p>
             </div>
+            </div>
         </section>
 
         <section class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
-            <h2 class="text-2xl font-bold mb-6">Phased Rollout</h2>
-            <div class="space-y-6">
-                <div class="flex items-center gap-4 border-b pb-4">
-                    <span class="font-bold text-blue-600 text-lg w-20">Alpha</span>
-                    <p>Internal / Closed Beta: Focus on edge-case failures and regulatory blocks.</p>
+            <h2 class="text-2xl font-bold mb-6">2. Structure the Rollout</h2>
+            <div class="space-y-8">
+                <div>
+                    <span class="font-bold text-blue-600 text-lg">Alpha</span>
+                    <p class="text-slate-600 mb-3 mt-1">Internal / Closed Beta: Focus on edge-case failures and regulatory blocks.</p>
+                    <ul class="list-disc list-inside text-slate-700 space-y-1.5 ml-2">
+                        <li>Internal testing checklist covering all flows (goal, term, link bank, fund)</li>
+                        <li>Edge-case and failure-mode documentation with remediation plan</li>
+                        <li>Compliance and regulatory review with legal sign-off</li>
+                        <li>Feedback log from internal stakeholders and QA</li>
+                        <li>Go/no-go criteria and readiness checklist for Beta</li>
+                    </ul>
                 </div>
-                <div class="flex items-center gap-4 border-b pb-4">
-                    <span class="font-bold text-blue-600 text-lg w-20">Beta</span>
-                    <p>Segmented Cohort: A/B testing messaging and value props.</p>
+                <div>
+                    <span class="font-bold text-blue-600 text-lg">Beta</span>
+                    <p class="text-slate-600 mb-3 mt-1">Segmented Cohort: A/B testing messaging and value props.</p>
+                    <ul class="list-disc list-inside text-slate-700 space-y-1.5 ml-2">
+                        <li>Cohort selection criteria and invitation/onboarding flow</li>
+                        <li>A/B test framework with messaging and value-prop variants</li>
+                        <li>Analytics and conversion tracking (funnel, drop-off, TTV)</li>
+                        <li>Qualitative feedback collection (surveys, interviews)</li>
+                        <li>Beta report with recommendations for GA messaging and UX</li>
+                    </ul>
                 </div>
-                <div class="flex items-center gap-4">
-                    <span class="font-bold text-blue-600 text-lg w-20">GA</span>
-                    <p>General Availability: Operational scale and support readiness.</p>
+                <div>
+                    <span class="font-bold text-blue-600 text-lg">GA</span>
+                    <p class="text-slate-600 mb-3 mt-1">General Availability: Operational scale and support readiness.</p>
+                    <ul class="list-disc list-inside text-slate-700 space-y-1.5 ml-2">
+                        <li>Load and scale testing with projected traffic volumes</li>
+                        <li>Support documentation, FAQs, and agent training materials</li>
+                        <li>Monitoring dashboards (health, errors, conversion, retention)</li>
+                        <li>Incident response and escalation playbook</li>
+                        <li>Phased GA rollout plan (e.g., 10% → 50% → 100%)</li>
+                    </ul>
+                </div>
+
+                <div class="pt-8 border-t border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-800 mb-4">Acceptance criteria for promotion</h3>
+                    <p class="text-slate-600 mb-6 text-sm">These questions must be answered before promoting the feature to the next environment.</p>
+
+                    <div class="space-y-6">
+                        <div>
+                            <p class="font-semibold text-blue-600 text-sm uppercase tracking-wider mb-2">Alpha → Beta</p>
+                            <ul class="space-y-2 text-slate-700">
+                                <li class="flex gap-2"><span class="text-slate-400">□</span> Are all critical and high-severity bugs resolved or documented with workarounds?</li>
+                                <li class="flex gap-2"><span class="text-slate-400">□</span> Has legal/compliance signed off on disclosures, flows, and regulatory requirements?</li>
+                                <li class="flex gap-2"><span class="text-slate-400">□</span> Does the end-to-end flow (goal → term → link bank → fund) complete successfully in staging?</li>
+                                <li class="flex gap-2"><span class="text-slate-400">□</span> Are analytics and tracking verified for funnel and conversion measurement?</li>
+                                <li class="flex gap-2"><span class="text-slate-400">□</span> Is the Beta cohort defined and the invitation/onboarding flow ready?</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-blue-600 text-sm uppercase tracking-wider mb-2">Beta → GA</p>
+                            <ul class="space-y-2 text-slate-700">
+                                <li class="flex gap-2"><span class="text-slate-400">□</span> Does Day-30 retention meet or exceed the target threshold?</li>
+                                <li class="flex gap-2"><span class="text-slate-400">□</span> Is Time-to-Value (TTV) within acceptable limits for the target segment?</li>
+                                <li class="flex gap-2"><span class="text-slate-400">□</span> Have we identified a winning messaging/value-prop variant from A/B tests?</li>
+                                <li class="flex gap-2"><span class="text-slate-400">□</span> Are support, monitoring, and incident response ready for production traffic?</li>
+                                <li class="flex gap-2"><span class="text-slate-400">□</span> Has load testing confirmed the system can handle expected GA volume?</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section>
-            <h2 class="text-2xl font-bold mb-8">UX Principles</h2>
+            <h2 class="text-2xl font-bold mb-8">3. Ensure a Simple UX</h2>
             <p class="text-slate-600 mb-6 italic">"Anxiety is our biggest competitor."</p>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
@@ -76,6 +163,31 @@
                     <div class="w-full h-40 bg-slate-100 rounded-xl mb-4"></div>
                     <h3 class="font-bold text-lg mb-2">Direct Feedback</h3>
                     <p class="text-slate-600 text-sm">Immediate confirmation and clear next steps to reinforce trust and completion.</p>
+                </div>
+            </div>
+
+            <div class="mt-12 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+                <h3 class="text-xl font-bold text-slate-900 mb-2">In-app experience (post-funding)</h3>
+                <p class="text-slate-600 mb-6">Simplicity extends beyond onboarding. The ongoing in-app experience should make money flow and compounding impact instantly understandable.</p>
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-semibold text-slate-800 mb-2">Money in / money out — simplest graphical form</h4>
+                        <ul class="list-disc list-inside text-slate-700 space-y-1.5">
+                            <li>Single-view flow diagram: Income → Savings → Annuity (arrows, not tables)</li>
+                            <li>Minimal labels: "In," "Out," "To annuity" — no jargon</li>
+                            <li>Visual proportion (e.g., bar widths) reflects actual amounts</li>
+                            <li>One-tap drill-down for details; default view stays simple</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-800 mb-2">Compounding impact — show the benefit of acting sooner</h4>
+                        <ul class="list-disc list-inside text-slate-700 space-y-1.5">
+                            <li>Side-by-side comparison: "Add $X now" vs "Add $X in 6 months" — outcome at maturity</li>
+                            <li>Single headline: "You'd have $X more by moving this to your annuity today"</li>
+                            <li>Simple progress: "This month: $Y is earning. Next month: $Y + interest."</li>
+                            <li>Avoid compound-interest formulas; show results, not math</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
