@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Gainbridge Savings Feature Strategy</title>
+    <title>Savings Pulse Strategy | Gainbridge</title>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans antialiased">
 
@@ -16,7 +16,7 @@
     </header>
 
     <section class="py-20 px-6 text-center">
-        <h1 class="text-5xl font-extrabold mb-6 text-slate-900">Savings Feature Launch</h1>
+        <h1 class="text-5xl font-extrabold mb-6 text-slate-900">Savings Pulse Launch</h1>
         <p class="text-xl text-slate-600 max-w-2xl mx-auto">A strategic framework for defined success, phased rollouts, and friction-free user experience.</p>
     </section>
 
@@ -60,15 +60,30 @@
             <div class="grid md:grid-cols-3 gap-6">
             <div class="bg-blue-600 p-8 rounded-2xl text-white">
                 <h3 class="font-bold text-blue-100 mb-2">North Star</h3>
-                <p class="text-2xl font-semibold">Net New Inflow / AUM</p>
+                <p class="text-xl font-semibold mb-3">Net New Inflow / AUM</p>
+                <ul class="list-disc list-inside text-blue-100 text-sm space-y-1.5">
+                    <li>New deposits attributed to Savings Pulse</li>
+                    <li>Growth in assets under management from savings flows</li>
+                    <li>Primary indicator of business impact</li>
+                </ul>
             </div>
             <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
                 <h3 class="font-bold text-slate-400 mb-2">Engagement</h3>
-                <p class="text-xl">Day-30 Retention</p>
+                <p class="text-xl font-semibold text-slate-800 mb-3">Day-30 Retention</p>
+                <ul class="list-disc list-inside text-slate-600 text-sm space-y-1.5">
+                    <li>% of users who funded and remain active at 30 days</li>
+                    <li>Signals product stickiness and habit formation</li>
+                    <li>Target threshold for Beta → GA promotion</li>
+                </ul>
             </div>
             <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
                 <h3 class="font-bold text-slate-400 mb-2">Efficiency</h3>
-                <p class="text-xl">Time-to-Value (TTV)</p>
+                <p class="text-xl font-semibold text-slate-800 mb-3">Time-to-Value (TTV)</p>
+                <ul class="list-disc list-inside text-slate-600 text-sm space-y-1.5">
+                    <li>Time from first touch to first funded account</li>
+                    <li>Lower TTV = less friction, higher conversion</li>
+                    <li>Acceptable limits vary by target segment</li>
+                </ul>
             </div>
             </div>
         </section>
@@ -142,28 +157,112 @@
 
         <section>
             <h2 class="text-2xl font-bold mb-8">3. Ensure a Simple UX</h2>
-            <p class="text-slate-600 mb-6 italic">"Anxiety is our biggest competitor."</p>
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                    <div class="w-full h-40 bg-slate-100 rounded-xl mb-4"></div>
-                    <h3 class="font-bold text-lg mb-2">Progressive Disclosure</h3>
-                    <p class="text-slate-600 text-sm">Surface primary info first; hide complex disclosures to prevent cognitive overload.</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                    <div class="w-full h-40 bg-slate-100 rounded-xl mb-4"></div>
-                    <h3 class="font-bold text-lg mb-2">One-Click Flows</h3>
-                    <p class="text-slate-600 text-sm">Minimize steps to reduce friction and lower Customer Acquisition Cost (CAC).</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                    <div class="w-full h-40 bg-slate-100 rounded-xl mb-4"></div>
-                    <h3 class="font-bold text-lg mb-2">Visual Progress Tracking</h3>
-                    <p class="text-slate-600 text-sm">Show users where they are in the journey to build confidence and reduce drop-off.</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                    <div class="w-full h-40 bg-slate-100 rounded-xl mb-4"></div>
-                    <h3 class="font-bold text-lg mb-2">Direct Feedback</h3>
-                    <p class="text-slate-600 text-sm">Immediate confirmation and clear next steps to reinforce trust and completion.</p>
-                </div>
+            <p class="text-slate-600 mb-2 italic">"Keep it simple and keep it moving."</p>
+            <p class="text-slate-600 mb-6">The demo walks through the full savings flow: set a goal, choose a term, link your bank, fund your account, and connect. After a "6 months later" transition, it shows the in-app experience — money flow (spending vs. savings by month), compounding impact, and a one-tap "Add to annuity" button. <a href="announcement.html#demo" class="text-blue-600 hover:text-blue-700 font-medium hover:underline">View the demo →</a></p>
+            <p class="text-slate-500 text-sm mb-8">Examples reference apps that do each pattern well. Expand any concept to see multiple examples.</p>
+            <div class="space-y-3">
+                <details class="group bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                    <summary class="flex items-center gap-4 px-6 py-4 cursor-pointer list-none hover:bg-slate-50 transition">
+                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">1</span>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-slate-900">Progressive Disclosure</h3>
+                            <p class="text-slate-600 text-sm">Surface primary info first; hide complexity until needed.</p>
+                        </div>
+                        <span class="text-slate-400 group-open:rotate-180 transition-transform"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></span>
+                    </summary>
+                    <div class="px-6 pb-6 pt-0 border-t border-slate-100">
+                        <ol class="list-decimal list-inside space-y-3 text-slate-700 text-sm mt-4">
+                            <li><strong>Google Search</strong> — Single search box upfront; "Tools" and "Advanced Search" reveal filters only when needed. <a href="https://www.google.com/search" target="_blank" rel="noopener" class="text-blue-600 hover:underline">View →</a></li>
+                            <li><strong>Chime / Robinhood</strong> — Break onboarding into small steps; delay KYC friction while front-loading value. Built for Mars ranks both for lowest onboarding friction. <a href="https://builtformars.com/ux-glossary/progressive-disclosure" target="_blank" rel="noopener" class="text-blue-600 hover:underline">Built for Mars →</a></li>
+                            <li><strong>Unit</strong> — Dynamic disclosures (e.g., interest rates) update automatically in terms; no re-acceptance needed. <a href="https://unit.co/docs/disclosures/" target="_blank" rel="noopener" class="text-blue-600 hover:underline">Unit docs →</a></li>
+                            <li><strong>iwoca</strong> — Fintech sign-up uses progressive disclosure to manage expectations; one question at a time. <a href="https://www.iwoca.co.uk" target="_blank" rel="noopener" class="text-blue-600 hover:underline">iwoca →</a></li>
+                        </ol>
+                    </div>
+                </details>
+                <details class="group bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                    <summary class="flex items-center gap-4 px-6 py-4 cursor-pointer list-none hover:bg-slate-50 transition">
+                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">2</span>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-slate-900">One-Click Flows</h3>
+                            <p class="text-slate-600 text-sm">Minimize steps to reduce friction and get users earning faster.</p>
+                        </div>
+                        <span class="text-slate-400 group-open:rotate-180 transition-transform"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></span>
+                    </summary>
+                    <div class="px-6 pb-6 pt-0 border-t border-slate-100">
+                        <ol class="list-decimal list-inside space-y-3 text-slate-700 text-sm mt-4">
+                            <li><strong>Chime Quick Fund</strong> — One-tap "Add Money" on Savings screen; Checking → Savings pre-selected. Mirrors our "Add to annuity" pattern. <a href="https://help.chime.com/how-do-i-add-money-to-my-chime-savings-account-0d2120ad" target="_blank" rel="noopener" class="text-blue-600 hover:underline">Chime help →</a></li>
+                            <li><strong>Acorns Round-Ups</strong> — Spare change invested automatically; Real-Time Round-Ups with every swipe. One-tap investing. <a href="https://www.acorns.com/round-ups/" target="_blank" rel="noopener" class="text-blue-600 hover:underline">Acorns →</a></li>
+                            <li><strong>Cash App</strong> — Send money via $cashtag, phone, or email with minimal taps. <a href="https://cash.app/send" target="_blank" rel="noopener" class="text-blue-600 hover:underline">Cash App →</a></li>
+                            <li><strong>Stripe Checkout + Apple Pay</strong> — One tap completes payment; surfaces Apple Pay, Google Pay, Link automatically. <a href="https://docs.stripe.com/checkout/one-click-payment-buttons" target="_blank" rel="noopener" class="text-blue-600 hover:underline">Stripe docs →</a></li>
+                        </ol>
+                    </div>
+                </details>
+                <details class="group bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                    <summary class="flex items-center gap-4 px-6 py-4 cursor-pointer list-none hover:bg-slate-50 transition">
+                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">3</span>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-slate-900">Visual Progress Tracking</h3>
+                            <p class="text-slate-600 text-sm">Show users where they are in the journey to build confidence and reduce drop-off.</p>
+                        </div>
+                        <span class="text-slate-400 group-open:rotate-180 transition-transform"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></span>
+                    </summary>
+                    <div class="px-6 pb-6 pt-0 border-t border-slate-100">
+                        <ol class="list-decimal list-inside space-y-3 text-slate-700 text-sm mt-4">
+                            <li><strong>Duolingo</strong> — Progress bars, streak counters, XP bar; clear path shows exactly where you are. Gamification reinforces completion. <a href="https://www.duolingo.com" target="_blank" rel="noopener" class="text-blue-600 hover:underline">Duolingo →</a></li>
+                            <li><strong>Savings Pulse stepper</strong> — Goal → Term → Link → Fund → Connect → Done. Same pattern for our onboarding. <a href="announcement.html#demo" class="text-blue-600 hover:underline">View demo →</a></li>
+                        </ol>
+                    </div>
+                </details>
+                <details class="group bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                    <summary class="flex items-center gap-4 px-6 py-4 cursor-pointer list-none hover:bg-slate-50 transition">
+                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">4</span>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-slate-900">Direct Feedback</h3>
+                            <p class="text-slate-600 text-sm">Immediate confirmation and clear next steps at every stage.</p>
+                        </div>
+                        <span class="text-slate-400 group-open:rotate-180 transition-transform"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></span>
+                    </summary>
+                    <div class="px-6 pb-6 pt-0 border-t border-slate-100">
+                        <ol class="list-decimal list-inside space-y-3 text-slate-700 text-sm mt-4">
+                            <li><strong>Notion</strong> — Inline checkmarks, "Saved" toasts, clear next-step prompts. Users always know what just happened. <a href="https://www.notion.so" target="_blank" rel="noopener" class="text-blue-600 hover:underline">Notion →</a></li>
+                            <li><strong>Stripe</strong> — Success states, webhook confirmations, clear post-payment next steps. <a href="https://docs.stripe.com/payments/checkout/after-the-payment" target="_blank" rel="noopener" class="text-blue-600 hover:underline">Stripe docs →</a></li>
+                        </ol>
+                    </div>
+                </details>
+                <details class="group bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                    <summary class="flex items-center gap-4 px-6 py-4 cursor-pointer list-none hover:bg-slate-50 transition">
+                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">5</span>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-slate-900">No Hidden Fees</h3>
+                            <p class="text-slate-600 text-sm">What you see is what you get — no commissions, no surprises.</p>
+                        </div>
+                        <span class="text-slate-400 group-open:rotate-180 transition-transform"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></span>
+                    </summary>
+                    <div class="px-6 pb-6 pt-0 border-t border-slate-100">
+                        <ol class="list-decimal list-inside space-y-3 text-slate-700 text-sm mt-4">
+                            <li><strong>Spruce</strong> — No monthly fees, no balance minimums, no foreign transaction fees. Short, explicit fee list (5 items). <a href="https://www.sprucemoney.com/fees" target="_blank" rel="noopener" class="text-blue-600 hover:underline">Spruce fees →</a></li>
+                            <li><strong>MoneyLion</strong> — "100% transparency," low or zero fees, no hidden charges. <a href="https://www.moneylion.com/pricing/" target="_blank" rel="noopener" class="text-blue-600 hover:underline">MoneyLion →</a></li>
+                            <li><strong>Loop</strong> — "Transparent FX rates and honest pricing with no fine print." <a href="https://www.bankonloop.com/pricing" target="_blank" rel="noopener" class="text-blue-600 hover:underline">Loop →</a></li>
+                        </ol>
+                    </div>
+                </details>
+                <details class="group bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                    <summary class="flex items-center gap-4 px-6 py-4 cursor-pointer list-none hover:bg-slate-50 transition">
+                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">6</span>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-slate-900">Grace for Occasional Dips</h3>
+                            <p class="text-slate-600 text-sm">Encourage saving without punishing a bad month. Every month is a fresh start.</p>
+                        </div>
+                        <span class="text-slate-400 group-open:rotate-180 transition-transform"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></span>
+                    </summary>
+                    <div class="px-6 pb-6 pt-0 border-t border-slate-100">
+                        <ol class="list-decimal list-inside space-y-3 text-slate-700 text-sm mt-4">
+                            <li><strong>Headspace</strong> — "Give Yourself Grace" meditation for bad days. No shame for missed streaks; "Every day is a fresh start." <a href="https://www.headspace.com/content/meditation/give-yourself-grace/7787" target="_blank" rel="noopener" class="text-blue-600 hover:underline">Headspace →</a></li>
+                            <li><strong>Calm</strong> — In-the-moment exercises (Panic SOS, breathing) for acute stress; supportive without judgment. <a href="https://www.calm.com" target="_blank" rel="noopener" class="text-blue-600 hover:underline">Calm →</a></li>
+                            <li><strong>Savings Pulse</strong> — Month-over-month changes shown neutrally; supportive copy when savings dip. <a href="announcement.html#demo" class="text-blue-600 hover:underline">View demo →</a></li>
+                        </ol>
+                    </div>
+                </details>
             </div>
 
             <div class="mt-12 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
@@ -177,6 +276,7 @@
                             <li>Minimal labels: "In," "Out," "To annuity" — no jargon</li>
                             <li>Visual proportion (e.g., bar widths) reflects actual amounts</li>
                             <li>One-tap drill-down for details; default view stays simple</li>
+                            <li>Month-over-month changes shown neutrally — avoid discouraging users when savings dip; supportive copy like "Some months you'll save more, some less — that's okay. Every month is a fresh start."</li>
                         </ul>
                     </div>
                     <div>

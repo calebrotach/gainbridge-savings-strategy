@@ -28,8 +28,27 @@
         .accordion-content.open { max-height: 500px; }
         .accordion-trigger::after { content: '+'; float: right; font-weight: 300; }
         .accordion-trigger.active::after { content: '−'; }
+        @keyframes fade-in-up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        .try-it-shimmer { position: relative; overflow: hidden; }
+        .add-success { background-color: #059669 !important; }
+        .try-it-shimmer::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+            animation: shimmer 2.5s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes deposit-success-bounce {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.15); }
+            50% { transform: scale(0.95); }
+            75% { transform: scale(1.05); }
+        }
+        .deposit-success-bounce { animation: deposit-success-bounce 0.5s ease-out; }
     </style>
-    <title>Savings Feature | Gainbridge®</title>
+    <title>Savings Pulse® | Gainbridge®</title>
 </head>
 <body class="bg-white text-slate-900 font-sans antialiased">
 
@@ -57,17 +76,14 @@
         <div class="relative max-w-6xl mx-auto px-6 py-24 md:py-32 text-center">
             <p class="text-gainbridge-teal font-semibold uppercase tracking-wider text-sm mb-4">Now available</p>
             <h1 class="text-4xl md:text-6xl font-bold text-gainbridge-navy mb-6 leading-tight">
-                A simpler way to save with Gainbridge
+                Savings Pulse®. Track your savings with Gainbridge
             </h1>
             <p class="text-xl text-slate-600 max-w-2xl mx-auto mb-10">
-                Our new savings feature makes it easy to grow your money — from onboarding to your in-app dashboard with money flow, compounding impact, and no hidden fees.
+                Our new Savings Pulse® feature makes it easy to grow your money, from onboarding to your in-app dashboard with money flow, compounding impact, and no hidden fees.
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#get-started" class="inline-flex items-center justify-center px-8 py-4 bg-gainbridge-teal text-white font-semibold rounded-lg hover:bg-gainbridge-teal-dark transition shadow-lg">
-                    Start saving
-                </a>
-                <a href="#demo" class="inline-flex items-center justify-center px-8 py-4 bg-white text-gainbridge-teal font-semibold rounded-lg border-2 border-gainbridge-teal hover:bg-teal-50 transition">
-                    Try the demo
+            <div class="flex justify-center">
+                <a href="#demo" class="inline-flex items-center justify-center px-8 py-4 bg-gainbridge-teal text-white font-semibold rounded-lg hover:bg-gainbridge-teal-dark transition shadow-lg">
+                    Start saving today
                 </a>
             </div>
             <div class="flex flex-wrap justify-center gap-8 mt-16 text-slate-500 text-sm">
@@ -106,33 +122,64 @@
     <!-- Hands-on Demo -->
     <section id="demo" class="py-24 bg-white">
         <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-16">
+            <div class="text-center mb-12">
                 <h2 class="text-3xl font-bold text-gainbridge-navy mb-4">See it in action</h2>
-                <p class="text-slate-600 max-w-xl mx-auto mb-6">Try our interactive demos — onboarding and the in-app experience after you've funded.</p>
-                <div class="flex justify-center gap-2">
-                    <button onclick="showDemoTab('onboarding')" id="tab-onboarding" class="demo-tab px-4 py-2 rounded-lg font-medium text-sm bg-gainbridge-teal text-white">Onboarding</button>
-                    <button onclick="showDemoTab('inapp')" id="tab-inapp" class="demo-tab px-4 py-2 rounded-lg font-medium text-sm bg-slate-200 text-slate-600 hover:bg-slate-300">In-app experience</button>
-                </div>
+                <p class="text-slate-600 max-w-xl mx-auto">Set your goal, connect your bank, and see how your savings grow over time.</p>
             </div>
-            <div id="demo-onboarding" class="demo-panel max-w-2xl mx-auto">
-                <div class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden shadow-xl">
-                    <div class="bg-gainbridge-teal px-6 py-3 flex items-center gap-2">
+
+            <div id="demo-container" class="max-w-6xl mx-auto relative min-h-[600px] h-[min(720px,85vh)] overflow-hidden rounded-2xl">
+                <div id="demo-greyed-overlay" class="absolute inset-0 z-20 flex flex-col items-center justify-center rounded-2xl bg-slate-100/95 backdrop-blur-[2px]">
+                    <button onclick="startDemo()" class="try-it-shimmer px-8 py-4 rounded-xl font-semibold text-base bg-gainbridge-teal text-white hover:bg-gainbridge-teal-dark transition shadow-lg">
+                        Try it
+                    </button>
+                </div>
+                <div id="demo-setup" class="absolute inset-0 flex flex-col bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden shadow-xl">
+                    <div id="demo-setup-header" class="bg-gainbridge-teal px-6 py-3 flex items-center gap-2 flex-shrink-0">
                         <span class="w-3 h-3 rounded-full bg-white/40"></span>
                         <span class="w-3 h-3 rounded-full bg-white/40"></span>
                         <span class="w-3 h-3 rounded-full bg-white/40"></span>
-                        <span class="text-white/90 text-sm font-medium ml-2">Savings Demo — Gainbridge</span>
+                        <span class="text-white/90 text-sm font-medium ml-2">Savings Pulse® Demo | Gainbridge</span>
                     </div>
-                    <div class="p-8 md:p-12">
+                    <!-- Visual progress stepper (hidden on step 6) -->
+                    <div id="demo-setup-stepper" class="px-8 pt-6 pb-2 flex-shrink-0">
+                        <div class="flex items-center gap-1">
+                            <div id="step-dot-1" class="step-dot w-2.5 h-2.5 rounded-full bg-gainbridge-teal transition-colors"></div>
+                            <div id="step-dot-2" class="step-dot w-2.5 h-2.5 rounded-full bg-slate-200 transition-colors"></div>
+                            <div id="step-dot-3" class="step-dot w-2.5 h-2.5 rounded-full bg-slate-200 transition-colors"></div>
+                            <div id="step-dot-4" class="step-dot w-2.5 h-2.5 rounded-full bg-slate-200 transition-colors"></div>
+                            <div id="step-dot-5" class="step-dot w-2.5 h-2.5 rounded-full bg-slate-200 transition-colors"></div>
+                            <div id="step-dot-6" class="step-dot w-2.5 h-2.5 rounded-full bg-slate-200 transition-colors"></div>
+                            <span class="ml-2 text-slate-500 text-xs">Goal → Term → Link → Fund → Connect → Done</span>
+                        </div>
+                    </div>
+                    <div class="p-6 md:p-8 pt-4 flex-1 overflow-y-auto min-h-0">
                         <div id="demo-step-1" class="demo-step">
                             <h3 class="text-xl font-semibold text-gainbridge-navy mb-2">Set your savings goal</h3>
                             <p class="text-slate-600 mb-6">How much would you like to save each month?</p>
-                            <div class="flex gap-4 mb-6">
-                                <button onclick="selectAmount(500, this)" class="amount-btn flex-1 py-4 px-4 rounded-xl border-2 border-slate-200 text-slate-700 font-medium hover:border-gainbridge-teal hover:bg-teal-50/50 transition">$500</button>
-                                <button onclick="selectAmount(1000, this)" class="amount-btn flex-1 py-4 px-4 rounded-xl border-2 border-slate-200 text-slate-700 font-medium hover:border-gainbridge-teal hover:bg-teal-50/50 transition">$1,000</button>
-                                <button onclick="selectAmount(2500, this)" class="amount-btn flex-1 py-4 px-4 rounded-xl border-2 border-slate-200 text-slate-700 font-medium hover:border-gainbridge-teal hover:bg-teal-50/50 transition">$2,500</button>
+                            <div class="flex gap-4 mb-4">
+                                <button onclick="selectAmount(500, this)" class="amount-btn flex-1 py-4 px-4 rounded-xl border-2 border-slate-200 text-slate-700 font-medium hover:border-gainbridge-teal hover:bg-teal-50/50 transition flex flex-col items-center gap-1">
+                                    <span>$500</span>
+                                    <span class="text-xs text-slate-500 font-normal">Start today</span>
+                                </button>
+                                <button onclick="selectAmount(1000, this)" class="amount-btn flex-1 py-4 px-4 rounded-xl border-2 border-slate-200 text-slate-700 font-medium hover:border-gainbridge-teal hover:bg-teal-50/50 transition flex flex-col items-center gap-1">
+                                    <span>$1,000</span>
+                                    <span class="text-xs text-slate-500 font-normal">Earn more sooner</span>
+                                </button>
+                                <button onclick="selectAmount(2500, this)" class="amount-btn flex-1 py-4 px-4 rounded-xl border-2 border-slate-200 text-slate-700 font-medium hover:border-gainbridge-teal hover:bg-teal-50/50 transition flex flex-col items-center gap-1">
+                                    <span>$2,500</span>
+                                    <span class="text-xs text-slate-500 font-normal">Maximize growth</span>
+                                </button>
                             </div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-slate-500 text-sm">Or enter custom:</span>
+                                <div class="relative flex-1 max-w-[140px]">
+                                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">$</span>
+                                    <input type="text" id="custom-amount-input" placeholder="e.g. 750" inputmode="numeric" class="w-full pl-7 pr-3 py-2.5 rounded-xl border-2 border-slate-200 text-slate-700 font-medium focus:border-gainbridge-teal focus:ring-2 focus:ring-gainbridge-teal/20 focus:outline-none transition" oninput="handleCustomAmount(this)">
+                                </div>
+                            </div>
+                            <p class="text-slate-500 text-xs mb-6">Even $50/month adds up — start sooner, earn more.</p>
                             <div class="flex justify-between items-center">
-                                <span class="text-slate-500 text-sm">Step 1 of 5</span>
+                                <span class="text-slate-500 text-sm">Step 1 of 6</span>
                                 <button onclick="nextStep(2)" class="px-6 py-2.5 bg-gainbridge-teal text-white font-semibold rounded-lg hover:bg-gainbridge-teal-dark transition disabled:opacity-50" id="demo-next-1" disabled>
                                     Continue
                                 </button>
@@ -142,18 +189,24 @@
                             <h3 class="text-xl font-semibold text-gainbridge-navy mb-2">Choose your term</h3>
                             <p class="text-slate-600 mb-6">Lock in your rate for a period that fits your goals.</p>
                             <div class="space-y-3 mb-6">
-                                <label class="term-option flex items-center p-4 rounded-xl border-2 border-slate-200 cursor-pointer hover:border-gainbridge-teal/50 transition">
-                                    <input type="radio" name="term" value="3" class="mr-3"> <span class="font-medium">3 years — 5.45% APY</span>
+                                <label class="term-option flex items-center gap-3 p-4 rounded-xl border-2 border-slate-200 cursor-pointer hover:border-gainbridge-teal/50 transition">
+                                    <input type="radio" name="term" value="3" class="flex-shrink-0">
+                                    <span class="font-medium flex-1">3 years, 5.45% APY</span>
+                                    <span class="text-xs text-slate-500">Start earning sooner</span>
                                 </label>
-                                <label class="term-option flex items-center p-4 rounded-xl border-2 border-slate-200 cursor-pointer hover:border-gainbridge-teal/50 transition">
-                                    <input type="radio" name="term" value="5" class="mr-3" checked> <span class="font-medium">5 years — 5.65% APY</span>
+                                <label class="term-option flex items-center gap-3 p-4 rounded-xl border-2 border-slate-200 cursor-pointer hover:border-gainbridge-teal/50 transition">
+                                    <input type="radio" name="term" value="5" class="flex-shrink-0" checked>
+                                    <span class="font-medium flex-1">5 years, 5.65% APY</span>
+                                    <span class="text-xs text-slate-500">Most popular</span>
                                 </label>
-                                <label class="term-option flex items-center p-4 rounded-xl border-2 border-slate-200 cursor-pointer hover:border-gainbridge-teal/50 transition">
-                                    <input type="radio" name="term" value="7" class="mr-3"> <span class="font-medium">7 years — 5.80% APY</span>
+                                <label class="term-option flex items-center gap-3 p-4 rounded-xl border-2 border-slate-200 cursor-pointer hover:border-gainbridge-teal/50 transition">
+                                    <input type="radio" name="term" value="7" class="flex-shrink-0">
+                                    <span class="font-medium flex-1">7 years, 5.80% APY</span>
+                                    <span class="text-xs text-slate-500">Highest rate — earn more</span>
                                 </label>
                             </div>
                             <div class="flex justify-between items-center">
-                                <span class="text-slate-500 text-sm">Step 2 of 5</span>
+                                <span class="text-slate-500 text-sm">Step 2 of 6</span>
                                 <div class="flex gap-4">
                                     <button onclick="nextStep(1)" class="text-gainbridge-teal font-semibold hover:underline">Back</button>
                                     <button onclick="nextStep(3)" class="px-6 py-2.5 bg-gainbridge-teal text-white font-semibold rounded-lg hover:bg-gainbridge-teal-dark transition">
@@ -167,26 +220,33 @@
                             <p class="text-slate-600 mb-6">Securely connect your bank to fund your account. Takes about 30 seconds.</p>
                             <button onclick="nextStep(4)" class="w-full py-4 px-6 rounded-xl border-2 border-dashed border-slate-300 hover:border-gainbridge-teal hover:bg-teal-50/30 transition flex items-center justify-center gap-3 text-gainbridge-teal font-semibold">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
-                                Connect bank
+                                Connect bank — start earning today
                             </button>
                             <div class="flex justify-between items-center mt-6">
                                 <button onclick="nextStep(2)" class="text-gainbridge-teal font-semibold hover:underline">Back</button>
-                                <span class="text-slate-500 text-sm">Step 3 of 5</span>
+                                <span class="text-slate-500 text-sm">Step 3 of 6</span>
                             </div>
                         </div>
                         <div id="demo-step-4" class="demo-step hidden">
                             <h3 class="text-xl font-semibold text-gainbridge-navy mb-2">Fund your account</h3>
                             <p class="text-slate-600 mb-6">Confirm your initial deposit. Funds typically arrive within 1–2 business days.</p>
-                            <div class="bg-slate-100 rounded-xl p-6 mb-6 text-center">
+                            <div class="bg-slate-100 rounded-xl p-6 mb-4 text-center">
                                 <p class="text-slate-500 text-sm mb-1">Initial deposit</p>
                                 <p id="demo-deposit-amount" class="text-3xl font-bold text-gainbridge-navy">$1,000</p>
+                            </div>
+                            <button onclick="toggleFundingDetails()" class="text-gainbridge-teal text-sm font-medium hover:underline mb-4 flex items-center gap-1">
+                                <span>Important details</span>
+                                <svg class="w-4 h-4 transition-transform" id="funding-details-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            <div id="funding-details" class="hidden p-4 mb-6 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 text-sm">
+                                <p>Funds typically arrive in 1–2 business days. Withdrawals above 10% annually may be subject to surrender charges. Taxes apply when you withdraw.</p>
                             </div>
                             <div class="flex justify-between items-center">
                                 <button onclick="nextStep(3)" class="text-gainbridge-teal font-semibold hover:underline">Back</button>
                                 <div class="flex gap-4 items-center">
-                                    <span class="text-slate-500 text-sm">Step 4 of 5</span>
+                                    <span class="text-slate-500 text-sm">Step 4 of 6</span>
                                     <button onclick="nextStep(5)" class="px-6 py-2.5 bg-gainbridge-teal text-white font-semibold rounded-lg hover:bg-gainbridge-teal-dark transition">
-                                        Confirm deposit
+                                        Confirm deposit — start earning
                                     </button>
                                 </div>
                             </div>
@@ -197,152 +257,440 @@
                                     <svg class="w-8 h-8 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
                                 </div>
                                 <h3 class="text-xl font-semibold text-gainbridge-navy mb-2">You're all set</h3>
-                                <p class="text-slate-600 mb-6">In the real flow, you'd fund your account and start earning. Ready to do it for real?</p>
-                                <a href="#get-started" class="inline-flex items-center justify-center px-8 py-4 bg-gainbridge-teal text-white font-semibold rounded-lg hover:bg-gainbridge-teal-dark transition">
-                                    Get started
-                                </a>
+                                <p class="text-slate-600 mb-6">Your money is on its way. Next, connect your bank accounts to get a clear picture of your savings.</p>
+                                <button onclick="nextStep(6)" class="inline-flex items-center justify-center px-8 py-4 bg-gainbridge-teal text-white font-semibold rounded-lg hover:bg-gainbridge-teal-dark transition">
+                                    See my savings — start earning
+                                </button>
+                            </div>
+                        </div>
+                        <div id="demo-step-6" class="demo-step hidden">
+                            <!-- Blank in-app experience (no data) — encourages linking bank. Full-bleed when onboarding is done. -->
+                            <div id="connect-step-default" class="overflow-hidden -mx-6 -mt-4 md:-mx-8 md:-mt-4">
+                                <div class="bg-gainbridge-teal px-6 py-3 flex items-center gap-2 flex-shrink-0">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-white/40"></span>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-white/40"></span>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-white/40"></span>
+                                    <span class="text-white/90 text-sm font-medium ml-2">Savings Pulse® | Gainbridge</span>
+                                </div>
+                                <div class="p-8 md:p-12 space-y-6 bg-slate-50">
+                                    <!-- Add to annuity — disabled state -->
+                                    <div>
+                                        <button class="w-full py-3 px-4 rounded-xl bg-slate-200 text-slate-500 font-semibold flex items-center justify-center gap-2 cursor-not-allowed" disabled>
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+                                            Add to annuity
+                                        </button>
+                                        <p class="text-slate-400 text-xs mt-1">Connect your bank to move funds into your annuity</p>
+                                    </div>
+                                    <!-- Money flow — empty -->
+                                    <div>
+                                        <h3 class="text-base font-semibold text-gainbridge-navy mb-2">Your money flow</h3>
+                                        <div class="rounded-xl border-2 border-dashed border-slate-200 bg-white/50 p-6 text-center">
+                                            <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-2">
+                                                <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                                            </div>
+                                            <p class="text-slate-500 text-sm font-medium">No money flow data yet</p>
+                                            <p class="text-slate-400 text-xs mt-0.5">Link your bank to see spending vs. savings by month</p>
+                                        </div>
+                                    </div>
+                                    <!-- Compounding — empty -->
+                                    <div>
+                                        <h3 class="text-base font-semibold text-gainbridge-navy mb-2">Start sooner, earn more</h3>
+                                        <div class="rounded-xl border-2 border-dashed border-slate-200 bg-white/50 p-4 text-center">
+                                            <p class="text-slate-400 text-xs">Connect your bank to see how $50 this week can mean $10+ more per year</p>
+                                        </div>
+                                    </div>
+                                    <!-- Primary CTA -->
+                                    <button onclick="showConnectedState()" class="w-full py-4 px-6 rounded-xl bg-gainbridge-teal text-white font-semibold hover:bg-gainbridge-teal-dark transition flex items-center justify-center gap-3 shadow-lg">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+                                        Connect your bank — start earning sooner
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center mt-6">
+                                <button onclick="nextStep(5)" class="text-gainbridge-teal font-semibold hover:underline">Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- In-app experience (shown after "See what's next") -->
+                <div id="demo-inapp" class="absolute inset-0 hidden flex flex-col bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden shadow-xl">
+                    <div class="bg-gainbridge-teal px-6 py-3 flex items-center gap-2 flex-shrink-0">
+                        <span class="w-3 h-3 rounded-full bg-white/40"></span>
+                        <span class="w-3 h-3 rounded-full bg-white/40"></span>
+                        <span class="w-3 h-3 rounded-full bg-white/40"></span>
+                        <span class="text-white/90 text-sm font-medium ml-2">Savings Pulse® | Gainbridge</span>
+                    </div>
+                    <div class="p-6 md:p-8 flex-1 overflow-y-auto min-h-0">
+                        <div id="bank-connected-banner" class="rounded-xl border border-emerald-200 bg-emerald-50 p-4 mb-6 flex items-center justify-between gap-3">
+                            <p class="text-emerald-800 font-medium text-sm">Bank connected. You're ready to see your money flow and start earning.</p>
+                            <button onclick="document.getElementById('bank-connected-banner').classList.add('hidden')" class="flex-shrink-0 p-1.5 rounded-lg hover:bg-emerald-100 text-emerald-700 transition" aria-label="Dismiss">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+                            <!-- Left: Money flow -->
+                            <div class="lg:order-1">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-lg font-semibold text-gainbridge-navy">Your money flow</h3>
+                                <button onclick="toggleFlowMonths()" id="flow-months-btn" class="text-gainbridge-teal text-xs font-medium hover:underline">View 3 months</button>
+                            </div>
+                            <p class="text-slate-500 text-xs mb-4">How much you saved each month</p>
+                            <div id="flow-chart" class="space-y-2">
+                                <!-- 3 months -->
+                                <div id="flow-3mo" class="flow-period hidden space-y-2">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-slate-500 text-xs w-10">Oct</span>
+                                        <div class="flex-1 h-8 rounded-full overflow-hidden flex bg-slate-100">
+                                            <div class="bg-gainbridge-teal rounded-l-full" style="width: 26%"></div>
+                                            <div class="bg-amber-400/60 rounded-r-full" style="width: 74%"></div>
+                                        </div>
+                                        <div class="w-24 text-right">
+                                            <span class="text-base font-bold text-gainbridge-teal">$1.1k</span>
+                                            <span class="text-slate-400 text-xs ml-1">saved</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-slate-500 text-xs w-10">Nov</span>
+                                        <div class="flex-1 h-8 rounded-full overflow-hidden flex bg-slate-100">
+                                            <div class="bg-gainbridge-teal rounded-l-full" style="width: 22%"></div>
+                                            <div class="bg-amber-400/60 rounded-r-full" style="width: 78%"></div>
+                                        </div>
+                                        <div class="w-24 text-right">
+                                            <span class="text-base font-bold text-gainbridge-teal">$900</span>
+                                            <span class="text-slate-500 text-xs ml-1">saved ↓ 18%</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-slate-500 text-xs w-10">Dec</span>
+                                        <div class="flex-1 h-8 rounded-full overflow-hidden flex bg-slate-100">
+                                            <div class="bg-gainbridge-teal rounded-l-full" style="width: 33%"></div>
+                                            <div class="bg-amber-400/60 rounded-r-full" style="width: 67%"></div>
+                                        </div>
+                                        <div class="w-24 text-right">
+                                            <span class="text-base font-bold text-gainbridge-teal">$1.4k</span>
+                                            <span class="text-emerald-600 text-xs ml-1">saved ↑ 56%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 6 months -->
+                                <div id="flow-6mo" class="flow-period space-y-2">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-slate-500 text-xs w-10">Jul</span>
+                                        <div class="flex-1 h-8 rounded-full overflow-hidden flex bg-slate-100">
+                                            <div class="bg-gainbridge-teal rounded-l-full" style="width: 20%"></div>
+                                            <div class="bg-amber-400/60 rounded-r-full" style="width: 80%"></div>
+                                        </div>
+                                        <div class="w-24 text-right">
+                                            <span class="text-base font-bold text-gainbridge-teal">$800</span>
+                                            <span class="text-slate-400 text-xs ml-1">saved</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-slate-500 text-xs w-10">Aug</span>
+                                        <div class="flex-1 h-8 rounded-full overflow-hidden flex bg-slate-100">
+                                            <div class="bg-gainbridge-teal rounded-l-full" style="width: 26%"></div>
+                                            <div class="bg-amber-400/60 rounded-r-full" style="width: 74%"></div>
+                                        </div>
+                                        <div class="w-24 text-right">
+                                            <span class="text-base font-bold text-gainbridge-teal">$1.1k</span>
+                                            <span class="text-emerald-600 text-xs ml-1">saved ↑ 38%</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-slate-500 text-xs w-10">Sep</span>
+                                        <div class="flex-1 h-8 rounded-full overflow-hidden flex bg-slate-100">
+                                            <div class="bg-gainbridge-teal rounded-l-full" style="width: 24%"></div>
+                                            <div class="bg-amber-400/60 rounded-r-full" style="width: 76%"></div>
+                                        </div>
+                                        <div class="w-24 text-right">
+                                            <span class="text-base font-bold text-gainbridge-teal">$1.0k</span>
+                                            <span class="text-slate-500 text-xs ml-1">saved ↓ 9%</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-slate-500 text-xs w-10">Oct</span>
+                                        <div class="flex-1 h-8 rounded-full overflow-hidden flex bg-slate-100">
+                                            <div class="bg-gainbridge-teal rounded-l-full" style="width: 26%"></div>
+                                            <div class="bg-amber-400/60 rounded-r-full" style="width: 74%"></div>
+                                        </div>
+                                        <div class="w-24 text-right">
+                                            <span class="text-base font-bold text-gainbridge-teal">$1.1k</span>
+                                            <span class="text-emerald-600 text-xs ml-1">saved ↑ 10%</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-slate-500 text-xs w-10">Nov</span>
+                                        <div class="flex-1 h-8 rounded-full overflow-hidden flex bg-slate-100">
+                                            <div class="bg-gainbridge-teal rounded-l-full" style="width: 22%"></div>
+                                            <div class="bg-amber-400/60 rounded-r-full" style="width: 78%"></div>
+                                        </div>
+                                        <div class="w-24 text-right">
+                                            <span class="text-base font-bold text-gainbridge-teal">$900</span>
+                                            <span class="text-slate-500 text-xs ml-1">saved ↓ 18%</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-slate-500 text-xs w-10">Dec</span>
+                                        <div class="flex-1 h-8 rounded-full overflow-hidden flex bg-slate-100">
+                                            <div class="bg-gainbridge-teal rounded-l-full" style="width: 33%"></div>
+                                            <div class="bg-amber-400/60 rounded-r-full" style="width: 67%"></div>
+                                        </div>
+                                        <div class="w-24 text-right">
+                                            <span class="text-base font-bold text-gainbridge-teal">$1.4k</span>
+                                            <span class="text-emerald-600 text-xs ml-1">saved ↑ 56%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap gap-6 mt-4 text-xs">
+                                <span class="flex items-center gap-1.5 font-medium text-gainbridge-teal"><span class="w-3 h-3 rounded-sm bg-gainbridge-teal"></span>Saved</span>
+                                <span class="flex items-center gap-1.5 text-slate-400"><span class="w-3 h-3 rounded-sm bg-amber-400/60"></span>Spent</span>
+                            </div>
+                            <p class="text-slate-500 text-xs mt-2">Each bar = 100% of income. Numbers show what you saved. ↑ / ↓ = change from prior month.</p>
+                            <p class="text-slate-500 text-xs mt-1">Some months you'll save more, some less. That's okay. Every month is a fresh start.</p>
+                            </div>
+
+                            <!-- Right: Add to annuity, Compounding, Progress, CTA -->
+                            <div class="lg:order-2 space-y-5">
+                                <!-- One-time deposit suggestions (CTAs to deposit flow) -->
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gainbridge-navy mb-3">Start sooner, earn more</h3>
+                                    <p class="text-slate-600 text-sm mb-3">One-time deposits grow until your annuity ends.</p>
+                                    <div class="space-y-2">
+                                        <button onclick="openDepositFlow(5)" class="w-full text-left p-3 rounded-xl border-2 border-gainbridge-teal bg-teal-50/30 hover:bg-teal-50/50 transition cursor-pointer">
+                                            <p class="text-gainbridge-navy font-semibold text-sm">$5 today</p>
+                                            <p class="text-slate-600 text-xs mt-0.5">≈ $2 earned by Dec 2030</p>
+                                        </button>
+                                        <button onclick="openDepositFlow(50)" class="w-full text-left p-3 rounded-xl border border-slate-200 bg-slate-50 hover:border-gainbridge-teal/50 hover:bg-teal-50/30 transition cursor-pointer">
+                                            <p class="text-slate-700 font-medium text-sm">$50 today</p>
+                                            <p class="text-slate-600 text-xs mt-0.5">≈ $16 earned by Dec 2030</p>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <button id="add-to-annuity-btn" onclick="openDepositFlow()" class="w-full py-3 px-4 rounded-xl bg-gainbridge-teal text-white font-semibold hover:bg-gainbridge-teal-dark transition flex items-center justify-center gap-2">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+                                        <span>Add to annuity</span>
+                                    </button>
+                                    <p class="text-slate-500 text-xs mt-2">One tap to move funds — every day you wait is a day you're not earning</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="mt-10 text-center">
+                <button onclick="openSimplicityPopup()" class="text-gainbridge-teal font-semibold hover:underline inline-flex items-center gap-2">
+                    <span>See how we built for simplicity</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </button>
+            </div>
+        </div>
+    </section>
 
-            <!-- In-app experience demo -->
-            <div id="demo-inapp" class="demo-panel max-w-2xl mx-auto hidden">
-                <div class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden shadow-xl">
-                    <div class="bg-gainbridge-teal px-6 py-3 flex items-center gap-2">
-                        <span class="w-3 h-3 rounded-full bg-white/40"></span>
-                        <span class="w-3 h-3 rounded-full bg-white/40"></span>
-                        <span class="w-3 h-3 rounded-full bg-white/40"></span>
-                        <span class="text-white/90 text-sm font-medium ml-2">Your savings — Gainbridge</span>
+    <!-- Deposit flow modal -->
+    <div id="deposit-flow-popup" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeDepositFlow()"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="relative bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden" onclick="event.stopPropagation()">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gainbridge-navy mb-1">Add to your annuity</h3>
+                    <p class="text-slate-600 text-sm mb-4">Move funds into your annuity to start earning.</p>
+                    <div id="deposit-flow-form" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Amount</label>
+                            <div class="flex flex-wrap gap-2 mb-2">
+                                <button type="button" onclick="setDepositAmount(5)" class="deposit-amount-btn py-2.5 px-3 rounded-lg border-2 border-slate-200 text-slate-700 font-medium hover:border-gainbridge-teal hover:bg-teal-50/50 transition">$5</button>
+                                <button type="button" onclick="setDepositAmount(50)" class="deposit-amount-btn py-2.5 px-3 rounded-lg border-2 border-slate-200 text-slate-700 font-medium hover:border-gainbridge-teal hover:bg-teal-50/50 transition">$50</button>
+                                <button type="button" onclick="setDepositAmount(100)" class="deposit-amount-btn py-2.5 px-3 rounded-lg border-2 border-slate-200 text-slate-700 font-medium hover:border-gainbridge-teal hover:bg-teal-50/50 transition">$100</button>
+                                <button type="button" onclick="setDepositAmount(250)" class="deposit-amount-btn py-2.5 px-3 rounded-lg border-2 border-slate-200 text-slate-700 font-medium hover:border-gainbridge-teal hover:bg-teal-50/50 transition">$250</button>
+                            </div>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">$</span>
+                                <input type="text" id="deposit-amount-input" placeholder="Amount" inputmode="numeric" class="w-full pl-8 pr-4 py-3 rounded-xl border-2 border-slate-200 text-slate-700 font-medium focus:border-gainbridge-teal focus:ring-2 focus:ring-gainbridge-teal/20 focus:outline-none transition" oninput="handleDepositAmountInput(this)">
+                            </div>
+                        </div>
+                        <button type="button" onclick="confirmDeposit()" id="deposit-confirm-btn" class="w-full py-3 px-4 rounded-xl bg-gainbridge-teal text-white font-semibold hover:bg-gainbridge-teal-dark transition disabled:opacity-50 disabled:cursor-not-allowed">
+                            Confirm deposit
+                        </button>
                     </div>
-                    <div class="p-8 md:p-12 space-y-8">
-                        <!-- Money flow -->
-                        <div>
-                            <h3 class="text-lg font-semibold text-gainbridge-navy mb-3">Your money flow</h3>
-                            <div class="flex items-center justify-between gap-2 py-4 px-4 bg-white rounded-xl border border-slate-200">
-                                <div class="flex-1 text-center">
-                                    <p class="text-2xl font-bold text-emerald-600">$4,200</p>
-                                    <p class="text-slate-500 text-xs mt-1">In</p>
-                                </div>
-                                <svg class="w-6 h-6 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                                <div class="flex-1 text-center">
-                                    <p class="text-2xl font-bold text-amber-600">$3,100</p>
-                                    <p class="text-slate-500 text-xs mt-1">Out</p>
-                                </div>
-                                <svg class="w-6 h-6 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                                <div class="flex-1 text-center bg-teal-50 rounded-lg py-2 px-3 border border-gainbridge-teal/30">
-                                    <p class="text-2xl font-bold text-gainbridge-teal">$1,100</p>
-                                    <p class="text-slate-500 text-xs mt-1">To annuity</p>
-                                </div>
-                            </div>
-                            <p class="text-slate-500 text-sm mt-2">This month's flow. Move more to your annuity to grow faster.</p>
+                    <div id="deposit-flow-success" class="hidden text-center py-6">
+                        <div id="deposit-success-icon" class="w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-4 deposit-success-bounce">
+                            <svg class="w-7 h-7 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
                         </div>
+                        <p class="text-lg font-semibold text-gainbridge-navy mb-1">Deposit confirmed</p>
+                        <p class="text-slate-600 text-sm mb-4">Your funds are on the way. You'll start earning soon.</p>
+                        <button type="button" onclick="closeDepositFlow()" class="text-gainbridge-teal font-semibold hover:underline">Done</button>
+                    </div>
+                </div>
+                <button onclick="closeDepositFlow()" class="absolute top-4 right-4 p-2 rounded-lg hover:bg-slate-100 text-slate-500 hover:text-slate-700 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
 
-                        <!-- Compounding impact -->
-                        <div>
-                            <h3 class="text-lg font-semibold text-gainbridge-navy mb-3">Start sooner, earn more</h3>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div class="p-4 rounded-xl border-2 border-gainbridge-teal bg-teal-50/30">
-                                    <p class="text-slate-500 text-xs mb-1">Add $1,000 today</p>
-                                    <p class="text-2xl font-bold text-gainbridge-navy">$1,318</p>
-                                    <p class="text-slate-600 text-sm mt-1">at 5 years (5.65% APY)</p>
-                                </div>
-                                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
-                                    <p class="text-slate-500 text-xs mb-1">Add $1,000 in 6 months</p>
-                                    <p class="text-2xl font-bold text-slate-600">$1,278</p>
-                                    <p class="text-slate-600 text-sm mt-1">at 5 years (5.65% APY)</p>
+    <!-- Built for Simplicity popup (Internal: For Gainbridge team) -->
+    <div id="simplicity-popup" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeSimplicityPopup()"></div>
+        <div class="absolute inset-4 md:inset-8 lg:inset-16 overflow-y-auto flex items-start justify-center p-4">
+            <div class="relative bg-white rounded-2xl shadow-2xl max-w-4xl w-full my-8">
+                <div class="sticky top-0 bg-white rounded-t-2xl px-6 py-4 border-b border-slate-200 flex items-center justify-between z-10">
+                    <div class="flex items-center gap-3">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-200/80 text-amber-900 uppercase tracking-wider">Internal: For Gainbridge team</span>
+                        <h2 class="text-xl font-bold text-gainbridge-navy">Built for simplicity</h2>
+                    </div>
+                    <button onclick="closeSimplicityPopup()" class="p-2 rounded-lg hover:bg-slate-100 text-slate-500 hover:text-slate-700 transition">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+                <p class="px-6 py-3 text-slate-600 text-sm">We designed the savings experience around one idea: keep it simple and keep it moving.</p>
+                <div class="px-6 pb-8 space-y-8">
+                    <!-- One-click flows -->
+                    <div class="flex flex-col md:flex-row gap-6 items-start">
+                        <div class="flex-shrink-0 w-full md:w-64">
+                            <div class="aspect-[9/16] max-h-[320px] rounded-xl border-2 border-slate-200 overflow-hidden bg-slate-50 shadow-lg">
+                                <div class="p-4 h-full flex flex-col">
+                                    <div class="h-8 bg-gainbridge-teal/20 rounded mb-4"></div>
+                                    <div class="flex-1 flex items-center justify-center">
+                                        <div class="w-full py-4 px-4 rounded-xl bg-gainbridge-teal text-white font-semibold text-center text-sm">Add to annuity</div>
+                                    </div>
+                                    <p class="text-[10px] text-slate-400 text-center mt-2">One tap to move funds</p>
                                 </div>
                             </div>
-                            <div class="mt-4 p-4 rounded-xl bg-emerald-50 border border-emerald-200">
-                                <p class="text-emerald-800 font-semibold text-sm">You'd have $40 more by moving this to your annuity today.</p>
-                            </div>
+                            <p class="text-xs text-slate-500 mt-2 text-center">Screenshot: One-click flow</p>
                         </div>
-
-                        <!-- Progress -->
-                        <div>
-                            <h3 class="text-lg font-semibold text-gainbridge-navy mb-3">Earning now</h3>
-                            <div class="flex items-center gap-4">
-                                <div class="flex-1 h-3 bg-slate-200 rounded-full overflow-hidden">
-                                    <div class="h-full bg-gainbridge-teal rounded-full" style="width: 65%"></div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-gainbridge-navy mb-2">One-click flows</h3>
+                            <p class="text-slate-600 text-sm">Minimize steps to reduce friction and get you earning faster. The in-app "Add to annuity" button moves funds in a single tap.</p>
+                        </div>
+                    </div>
+                    <!-- Progress tracking -->
+                    <div class="flex flex-col md:flex-row gap-6 items-start">
+                        <div class="flex-shrink-0 w-full md:w-64">
+                            <div class="aspect-[9/16] max-h-[320px] rounded-xl border-2 border-slate-200 overflow-hidden bg-slate-50 shadow-lg">
+                                <div class="p-4 h-full flex flex-col">
+                                    <div class="h-8 bg-gainbridge-teal/20 rounded mb-4"></div>
+                                    <div class="flex gap-1 mb-4">
+                                        <span class="w-2.5 h-2.5 rounded-full bg-gainbridge-teal"></span>
+                                        <span class="w-2.5 h-2.5 rounded-full bg-gainbridge-teal"></span>
+                                        <span class="w-2.5 h-2.5 rounded-full bg-gainbridge-teal"></span>
+                                        <span class="w-2.5 h-2.5 rounded-full bg-slate-200"></span>
+                                        <span class="w-2.5 h-2.5 rounded-full bg-slate-200"></span>
+                                        <span class="w-2.5 h-2.5 rounded-full bg-slate-200"></span>
+                                    </div>
+                                    <p class="text-[10px] text-slate-400">Goal → Term → Link → Fund → Connect → Done</p>
                                 </div>
-                                <span class="text-sm font-medium text-slate-700">$6,500 earning</span>
                             </div>
-                            <p class="text-slate-500 text-sm mt-2">Interest compounds each month. Add more anytime.</p>
+                            <p class="text-xs text-slate-500 mt-2 text-center">Screenshot: Stepper progress</p>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-gainbridge-navy mb-2">Progress tracking</h3>
+                            <p class="text-slate-600 text-sm">See where you are in the journey to build confidence and reduce drop-off. The visual stepper shows exactly which step you're on.</p>
+                        </div>
+                    </div>
+                    <!-- Direct feedback -->
+                    <div class="flex flex-col md:flex-row gap-6 items-start">
+                        <div class="flex-shrink-0 w-full md:w-64">
+                            <div class="aspect-[9/16] max-h-[320px] rounded-xl border-2 border-slate-200 overflow-hidden bg-slate-50 shadow-lg">
+                                <div class="p-4 h-full flex flex-col items-center justify-center">
+                                    <div class="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center mb-4">
+                                        <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                    </div>
+                                    <p class="font-semibold text-gainbridge-navy text-center">You're all set</p>
+                                    <p class="text-slate-500 text-xs text-center mt-1">Funds on the way</p>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2 text-center">Screenshot: Confirmation</p>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-gainbridge-navy mb-2">Direct feedback</h3>
+                            <p class="text-slate-600 text-sm">Immediate confirmation and clear next steps at every stage. Users always know what just happened and what to do next.</p>
+                        </div>
+                    </div>
+                    <!-- No hidden fees -->
+                    <div class="flex flex-col md:flex-row gap-6 items-start">
+                        <div class="flex-shrink-0 w-full md:w-64">
+                            <div class="aspect-[9/16] max-h-[320px] rounded-xl border-2 border-slate-200 overflow-hidden bg-slate-50 shadow-lg">
+                                <div class="p-4 h-full flex flex-col">
+                                    <div class="h-8 bg-gainbridge-teal/20 rounded mb-4"></div>
+                                    <div class="p-3 rounded-lg bg-white border border-slate-200">
+                                        <p class="text-xs font-medium text-gainbridge-navy">No fees</p>
+                                        <p class="text-[10px] text-slate-500 mt-1">No commissions • No surprises</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2 text-center">Screenshot: Fee disclosure</p>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-gainbridge-navy mb-2">No hidden fees</h3>
+                            <p class="text-slate-600 text-sm">What you see is what you get: no commissions, no surprises. Fee disclosure is upfront and transparent.</p>
+                        </div>
+                    </div>
+                    <!-- Money flow & compounding -->
+                    <div class="flex flex-col md:flex-row gap-6 items-start">
+                        <div class="flex-shrink-0 w-full md:w-64">
+                            <div class="aspect-[9/16] max-h-[320px] rounded-xl border-2 border-slate-200 overflow-hidden bg-slate-50 shadow-lg">
+                                <div class="p-4 h-full flex flex-col">
+                                    <div class="h-8 bg-gainbridge-teal/20 rounded mb-4"></div>
+                                    <div class="space-y-2">
+                                        <div class="h-6 rounded-full overflow-hidden flex bg-slate-200">
+                                            <div class="bg-amber-400" style="width: 70%"></div>
+                                            <div class="bg-gainbridge-teal flex-1"></div>
+                                        </div>
+                                        <div class="h-6 rounded-full overflow-hidden flex bg-slate-200">
+                                            <div class="bg-amber-400" style="width: 65%"></div>
+                                            <div class="bg-gainbridge-teal flex-1"></div>
+                                        </div>
+                                        <p class="text-[10px] text-slate-500">Spending | Savings</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2 text-center">Screenshot: Money flow bars</p>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-gainbridge-navy mb-2">Money flow & compounding</h3>
+                            <p class="text-slate-600 text-sm">See your in/out flow and how starting sooner earns more, in the simplest visual form. Split bars show spending vs. savings at a glance.</p>
+                        </div>
+                    </div>
+                    <!-- Grace for occasional dips -->
+                    <div class="flex flex-col md:flex-row gap-6 items-start">
+                        <div class="flex-shrink-0 w-full md:w-64">
+                            <div class="aspect-[9/16] max-h-[320px] rounded-xl border-2 border-slate-200 overflow-hidden bg-slate-50 shadow-lg">
+                                <div class="p-4 h-full flex flex-col items-center justify-center">
+                                    <p class="text-sm font-medium text-gainbridge-navy text-center">Some months up, some months down</p>
+                                    <p class="text-xs text-slate-500 text-center mt-2">That's okay. Every month is a fresh start.</p>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2 text-center">Screenshot: Supportive month view</p>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-gainbridge-navy mb-2">Grace for occasional dips</h3>
+                            <p class="text-slate-600 text-sm">We encourage saving without punishing a bad month. Life happens. The experience stays supportive, not discouraging. Every month is a fresh start to keep moving.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Feature highlights -->
-    <section class="py-24 bg-slate-50">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-gainbridge-navy mb-4">Built for simplicity</h2>
-                <p class="text-slate-600 max-w-xl mx-auto">We designed the savings experience around one idea: anxiety is our biggest competitor.</p>
-            </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <a href="#get-started" class="group block p-6 bg-white rounded-2xl border border-slate-200 hover:border-gainbridge-teal/50 hover:shadow-lg transition">
-                    <div class="w-12 h-12 rounded-xl bg-teal-100 text-gainbridge-teal flex items-center justify-center mb-4 group-hover:bg-gainbridge-teal group-hover:text-white transition">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    </div>
-                    <h3 class="font-semibold text-gainbridge-navy mb-2">One-click flows</h3>
-                    <p class="text-slate-600 text-sm">Minimize steps to reduce friction and get you earning faster.</p>
-                    <span class="text-gainbridge-teal font-medium text-sm mt-2 inline-block group-hover:underline">Learn more →</span>
-                </a>
-                <a href="#get-started" class="group block p-6 bg-white rounded-2xl border border-slate-200 hover:border-gainbridge-teal/50 hover:shadow-lg transition">
-                    <div class="w-12 h-12 rounded-xl bg-teal-100 text-gainbridge-teal flex items-center justify-center mb-4 group-hover:bg-gainbridge-teal group-hover:text-white transition">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                    </div>
-                    <h3 class="font-semibold text-gainbridge-navy mb-2">Progress tracking</h3>
-                    <p class="text-slate-600 text-sm">See where you are in the journey to build confidence and reduce drop-off.</p>
-                    <span class="text-gainbridge-teal font-medium text-sm mt-2 inline-block group-hover:underline">Learn more →</span>
-                </a>
-                <a href="#get-started" class="group block p-6 bg-white rounded-2xl border border-slate-200 hover:border-gainbridge-teal/50 hover:shadow-lg transition">
-                    <div class="w-12 h-12 rounded-xl bg-teal-100 text-gainbridge-teal flex items-center justify-center mb-4 group-hover:bg-gainbridge-teal group-hover:text-white transition">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    </div>
-                    <h3 class="font-semibold text-gainbridge-navy mb-2">Direct feedback</h3>
-                    <p class="text-slate-600 text-sm">Immediate confirmation and clear next steps at every stage.</p>
-                    <span class="text-gainbridge-teal font-medium text-sm mt-2 inline-block group-hover:underline">Learn more →</span>
-                </a>
-                <a href="#get-started" class="group block p-6 bg-white rounded-2xl border border-slate-200 hover:border-gainbridge-teal/50 hover:shadow-lg transition">
-                    <div class="w-12 h-12 rounded-xl bg-teal-100 text-gainbridge-teal flex items-center justify-center mb-4 group-hover:bg-gainbridge-teal group-hover:text-white transition">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                    </div>
-                    <h3 class="font-semibold text-gainbridge-navy mb-2">No hidden fees</h3>
-                    <p class="text-slate-600 text-sm">What you see is what you get — no commissions, no surprises.</p>
-                    <span class="text-gainbridge-teal font-medium text-sm mt-2 inline-block group-hover:underline">Learn more →</span>
-                </a>
-                <a href="#demo" onclick="showDemoTab('inapp')" class="group block p-6 bg-white rounded-2xl border border-slate-200 hover:border-gainbridge-teal/50 hover:shadow-lg transition">
-                    <div class="w-12 h-12 rounded-xl bg-teal-100 text-gainbridge-teal flex items-center justify-center mb-4 group-hover:bg-gainbridge-teal group-hover:text-white transition">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                    </div>
-                    <h3 class="font-semibold text-gainbridge-navy mb-2">Money flow & compounding</h3>
-                    <p class="text-slate-600 text-sm">See your in/out flow and how starting sooner earns more — in the simplest visual form.</p>
-                    <span class="text-gainbridge-teal font-medium text-sm mt-2 inline-block group-hover:underline">Try the demo →</span>
-                </a>
-            </div>
-        </div>
-    </section>
+    </div>
 
     <!-- FAQ Accordion -->
     <section id="faq" class="py-24 bg-white">
         <div class="max-w-3xl mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-gainbridge-navy mb-4">Questions about the savings feature?</h2>
+                <h2 class="text-3xl font-bold text-gainbridge-navy mb-4">Questions about Savings Pulse®?</h2>
                 <p class="text-slate-600">We're here to help.</p>
             </div>
             <div class="space-y-2">
                 <div class="border border-slate-200 rounded-xl overflow-hidden">
                     <button class="accordion-trigger w-full text-left px-6 py-4 font-semibold text-gainbridge-navy hover:bg-slate-50 transition flex items-center justify-between" data-target="faq-1">
-                        What is the new savings feature?
+                        What is Savings Pulse®?
                     </button>
                     <div id="faq-1" class="accordion-content">
                         <div class="px-6 pb-4 text-slate-600">
-                            Our savings feature lets you set goals, choose a term, and start earning guaranteed growth — all in a few simple steps. It's designed to be as straightforward as opening a CD, with the benefits of an annuity.
+                            Savings Pulse® lets you set goals, choose a term, and start earning guaranteed growth, all in a few simple steps. It's designed to be as straightforward as opening a CD, with the benefits of an annuity.
                         </div>
                     </div>
                 </div>
@@ -362,7 +710,7 @@
                     </button>
                     <div id="faq-3" class="accordion-content">
                         <div class="px-6 pb-4 text-slate-600">
-                            Rates vary by term length. Our fixed annuities currently offer up to 5.80% APY — significantly higher than the national CD average. Lock in your rate when you open your account.
+                            Rates vary by term length. Our fixed annuities currently offer up to 5.80% APY, significantly higher than the national CD average. Lock in your rate when you open your account.
                         </div>
                     </div>
                 </div>
@@ -373,6 +721,32 @@
                     <div id="faq-4" class="accordion-content">
                         <div class="px-6 pb-4 text-slate-600">
                             Yes. Gainbridge® is backed by Gainbridge Life Insurance Company, rated A- (Excellent) by AM Best, and part of Group 1001 with over $67.8 billion in assets under management. Your principal is protected.
+                        </div>
+                    </div>
+                </div>
+                <div class="border border-slate-200 rounded-xl overflow-hidden">
+                    <button class="accordion-trigger w-full text-left px-6 py-4 font-semibold text-gainbridge-navy hover:bg-slate-50 transition flex items-center justify-between" data-target="faq-5">
+                        What is an annuity?
+                    </button>
+                    <div id="faq-5" class="accordion-content">
+                        <div class="px-6 pb-4 text-slate-600">
+                            An annuity is a contract with an insurance company that helps you grow and protect your money. You contribute funds (either a lump sum or over time), and in return you receive guaranteed growth at a fixed rate, principal protection, and the option for future income. Fixed annuities are similar to CDs but often offer higher rates and tax-deferred growth.
+                        </div>
+                    </div>
+                </div>
+                <div class="border border-slate-200 rounded-xl overflow-hidden">
+                    <button class="accordion-trigger w-full text-left px-6 py-4 font-semibold text-gainbridge-navy hover:bg-slate-50 transition flex items-center justify-between" data-target="faq-6">
+                        Are annuities appropriate for my age?
+                    </button>
+                    <div id="faq-6" class="accordion-content">
+                        <div class="px-6 pb-4 text-slate-600 space-y-4">
+                            <p>Annuities can be part of a savings strategy at many life stages. Here’s a general guide:</p>
+                            <ul class="list-disc list-inside space-y-2 text-sm">
+                                <li><strong>20s & 25s:</strong> Good for building a guaranteed-growth foundation alongside other investments. Fixed annuities offer principal protection and competitive rates, useful if you want a portion of savings with no market risk.</li>
+                                <li><strong>30s:</strong> Well-suited for mid-term goals (e.g., 5–7 years). You can lock in rates and benefit from tax-deferred growth while keeping flexibility for future needs.</li>
+                                <li><strong>35+:</strong> Often ideal for balancing risk as you accumulate more assets. Fixed annuities can anchor your portfolio with predictable growth and help protect what you’ve saved.</li>
+                            </ul>
+                            <p>Your situation is unique. Consider your goals, timeline, and risk tolerance. A financial professional can help you decide if an annuity fits your plan.</p>
                         </div>
                     </div>
                 </div>
@@ -427,16 +801,133 @@
     <script>
         let selectedAmount = null;
 
-        function showDemoTab(tab) {
-            document.querySelectorAll('.demo-panel').forEach(p => p.classList.add('hidden'));
-            document.querySelectorAll('.demo-tab').forEach(t => {
-                t.classList.remove('bg-gainbridge-teal', 'text-white');
-                t.classList.add('bg-slate-200', 'text-slate-600');
+        function openSimplicityPopup() {
+            document.getElementById('simplicity-popup').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSimplicityPopup() {
+            document.getElementById('simplicity-popup').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function updateStepper(step) {
+            for (let i = 1; i <= 6; i++) {
+                const dot = document.getElementById('step-dot-' + i);
+                if (dot) dot.className = 'step-dot w-2.5 h-2.5 rounded-full transition-colors ' + (i <= step ? 'bg-gainbridge-teal' : 'bg-slate-200');
+            }
+        }
+
+        function showConnectedState() {
+            document.getElementById('demo-setup').classList.add('hidden');
+            document.getElementById('demo-inapp').classList.remove('hidden');
+            document.getElementById('bank-connected-banner').classList.remove('hidden');
+        }
+
+        let depositAmount = null;
+
+        function openDepositFlow(presetAmount) {
+            document.getElementById('deposit-flow-popup').classList.remove('hidden');
+            document.getElementById('deposit-flow-form').classList.remove('hidden');
+            document.getElementById('deposit-flow-success').classList.add('hidden');
+            const input = document.getElementById('deposit-amount-input');
+            input.value = '';
+            document.querySelectorAll('.deposit-amount-btn').forEach(b => {
+                b.classList.remove('border-gainbridge-teal', 'bg-teal-50/50');
+                b.classList.add('border-slate-200');
             });
-            document.getElementById('demo-' + tab).classList.remove('hidden');
-            const activeTab = document.getElementById('tab-' + tab);
-            activeTab.classList.remove('bg-slate-200', 'text-slate-600');
-            activeTab.classList.add('bg-gainbridge-teal', 'text-white');
+            if (presetAmount) {
+                setDepositAmount(presetAmount);
+            } else {
+                depositAmount = null;
+                document.getElementById('deposit-confirm-btn').disabled = true;
+            }
+        }
+
+        function closeDepositFlow() {
+            document.getElementById('deposit-flow-popup').classList.add('hidden');
+        }
+
+        function setDepositAmount(amount) {
+            depositAmount = amount;
+            const input = document.getElementById('deposit-amount-input');
+            input.value = amount;
+            document.querySelectorAll('.deposit-amount-btn').forEach(b => {
+                const btnVal = parseInt(b.textContent.replace(/[^0-9]/g, ''), 10);
+                b.classList.remove('border-gainbridge-teal', 'bg-teal-50/50');
+                b.classList.add('border-slate-200');
+                if (btnVal === amount) {
+                    b.classList.add('border-gainbridge-teal', 'bg-teal-50/50');
+                    b.classList.remove('border-slate-200');
+                }
+            });
+            document.getElementById('deposit-confirm-btn').disabled = false;
+        }
+
+        function handleDepositAmountInput(input) {
+            const raw = input.value.replace(/[^0-9]/g, '');
+            depositAmount = raw ? parseInt(raw, 10) : null;
+            document.querySelectorAll('.deposit-amount-btn').forEach(b => {
+                b.classList.remove('border-gainbridge-teal', 'bg-teal-50/50');
+                b.classList.add('border-slate-200');
+            });
+            document.getElementById('deposit-confirm-btn').disabled = !depositAmount || depositAmount < 1;
+        }
+
+        function confirmDeposit() {
+            const amount = depositAmount || parseInt(document.getElementById('deposit-amount-input').value.replace(/[^0-9]/g, ''), 10);
+            if (!amount || amount < 1) return;
+            document.getElementById('deposit-flow-form').classList.add('hidden');
+            const successEl = document.getElementById('deposit-flow-success');
+            successEl.classList.remove('hidden');
+            const icon = document.getElementById('deposit-success-icon');
+            icon.classList.remove('deposit-success-bounce');
+            void icon.offsetWidth;
+            icon.classList.add('deposit-success-bounce');
+        }
+
+        function toggleFlowMonths() {
+            const threeMo = document.getElementById('flow-3mo');
+            const sixMo = document.getElementById('flow-6mo');
+            const btn = document.getElementById('flow-months-btn');
+            if (sixMo.classList.contains('hidden')) {
+                sixMo.classList.remove('hidden');
+                threeMo.classList.add('hidden');
+                btn.textContent = 'View 3 months';
+            } else {
+                sixMo.classList.add('hidden');
+                threeMo.classList.remove('hidden');
+                btn.textContent = 'View 6 months';
+            }
+        }
+
+        function toggleFundingDetails() {
+            const details = document.getElementById('funding-details');
+            const chevron = document.getElementById('funding-details-chevron');
+            details.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180', !details.classList.contains('hidden'));
+        }
+
+        function startDemo() {
+            selectedAmount = null;
+            const customInput = document.getElementById('custom-amount-input');
+            if (customInput) { customInput.value = ''; customInput.classList.remove('border-gainbridge-teal'); }
+            document.querySelectorAll('.amount-btn').forEach(btn => {
+                btn.classList.remove('border-gainbridge-teal', 'bg-teal-50/50');
+                btn.classList.add('border-slate-200');
+            });
+            document.getElementById('demo-greyed-overlay').classList.add('hidden');
+            document.getElementById('demo-setup').classList.remove('hidden');
+            document.getElementById('demo-inapp').classList.add('hidden');
+            document.getElementById('connect-step-default').classList.remove('hidden');
+            document.getElementById('bank-connected-banner').classList.remove('hidden');
+            document.getElementById('demo-next-1').disabled = true;
+            nextStep(1);
+        }
+
+        function showInAppExperience() {
+            document.getElementById('demo-setup').classList.add('hidden');
+            document.getElementById('demo-inapp').classList.remove('hidden');
         }
 
         function selectAmount(amount, el) {
@@ -447,12 +938,46 @@
             });
             el.classList.add('border-gainbridge-teal', 'bg-teal-50/50');
             el.classList.remove('border-slate-200');
+            const customInput = document.getElementById('custom-amount-input');
+            if (customInput) { customInput.value = ''; customInput.classList.remove('border-gainbridge-teal'); }
             document.getElementById('demo-next-1').disabled = false;
+        }
+
+        function handleCustomAmount(input) {
+            const raw = input.value.replace(/[^0-9]/g, '');
+            const amount = raw ? parseInt(raw, 10) : null;
+            document.querySelectorAll('.amount-btn').forEach(btn => {
+                btn.classList.remove('border-gainbridge-teal', 'bg-teal-50/50');
+                btn.classList.add('border-slate-200');
+            });
+            if (amount && amount >= 1 && amount <= 999999) {
+                selectedAmount = amount;
+                input.classList.add('border-gainbridge-teal');
+                input.classList.remove('border-slate-200');
+                document.getElementById('demo-next-1').disabled = false;
+            } else {
+                selectedAmount = null;
+                input.classList.remove('border-gainbridge-teal');
+                input.classList.add('border-slate-200');
+                document.getElementById('demo-next-1').disabled = true;
+            }
         }
 
         function nextStep(step) {
             document.querySelectorAll('.demo-step').forEach(el => el.classList.add('hidden'));
             document.getElementById('demo-step-' + step).classList.remove('hidden');
+            updateStepper(step);
+            const header = document.getElementById('demo-setup-header');
+            const stepper = document.getElementById('demo-setup-stepper');
+            if (step === 6) {
+                document.getElementById('connect-step-default').classList.remove('hidden');
+                document.getElementById('connect-step-done').classList.add('hidden');
+                if (header) header.classList.add('hidden');
+                if (stepper) stepper.classList.add('hidden');
+            } else {
+                if (header) header.classList.remove('hidden');
+                if (stepper) stepper.classList.remove('hidden');
+            }
             if (step === 4) {
                 const amount = selectedAmount || 1000;
                 document.getElementById('demo-deposit-amount').textContent = '$' + amount.toLocaleString();
@@ -483,6 +1008,12 @@
                     btn.classList.add('active');
                 }
             });
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !document.getElementById('simplicity-popup').classList.contains('hidden')) {
+                closeSimplicityPopup();
+            }
         });
     </script>
 </body>
