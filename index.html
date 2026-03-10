@@ -14,7 +14,10 @@
                 <span class="text-xl font-bold text-slate-900">Savings Pulse Strategy</span>
                 <span class="text-slate-500 text-sm">By: Caleb Rotach</span>
             </div>
-            <a href="announcement.html" class="text-slate-600 hover:text-blue-600 font-medium text-sm transition">View announcement page →</a>
+            <div class="flex items-center gap-6">
+                <a href="#analytics" class="text-slate-600 hover:text-blue-600 font-medium text-sm transition">Analytics</a>
+                <a href="announcement.html" class="text-slate-600 hover:text-blue-600 font-medium text-sm transition">View announcement page →</a>
+            </div>
         </nav>
     </header>
 
@@ -290,6 +293,227 @@
                             <li>Simple progress: "This month: $Y is earning. Next month: $Y + interest."</li>
                             <li>Avoid compound-interest formulas; show results, not math</li>
                         </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="analytics" class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+            <h2 class="text-2xl font-bold mb-6">Analytics & Event Tracking Plan</h2>
+            <p class="text-slate-600 mb-6">A structured approach to measuring success across the funnel. Events map to North Star, Engagement, and Efficiency metrics and support Alpha → Beta → GA decisions.</p>
+
+            <div class="space-y-6">
+                <div class="p-6 rounded-xl border-2 border-blue-200 bg-blue-50/50">
+                    <h3 class="font-bold text-slate-800 mb-3">Two-Fold Segmentation: New vs Tenured</h3>
+                    <p class="text-slate-600 text-sm mb-4">All events and metrics are tracked separately by customer segment to support distinct strategies and benchmarks.</p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-white p-4 rounded-lg border border-slate-200">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-blue-600">New</span>
+                            <p class="text-slate-700 text-sm mt-1">First-time Savings Pulse users with no prior funded account. Focus: acquisition, onboarding friction, TTV, funnel conversion.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg border border-slate-200">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-blue-600">Tenured</span>
+                            <p class="text-slate-700 text-sm mt-1">Existing customers with a prior funded account or existing product relationship. Focus: engagement, add-to-annuity behavior, retention, incremental AUM.</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-500 text-xs mt-3">Every event includes <code class="bg-slate-100 px-1 rounded">customer_segment: new | tenured</code>. Dashboards and reports default to segment-filtered views.</p>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-slate-800 mb-3">Event Categories</h3>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-blue-600">Funnel</span>
+                            <p class="text-slate-700 text-sm mt-1">Goal set → Term selected → Bank linked → Funded → Connected</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-blue-600">Engagement</span>
+                            <p class="text-slate-700 text-sm mt-1">Return visits, feature usage, add-to-annuity taps, money flow views</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-blue-600">Business</span>
+                            <p class="text-slate-700 text-sm mt-1">Deposit amounts, AUM attribution, cohort revenue</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-slate-800 mb-3">Core Events to Track</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm border-collapse">
+                            <thead>
+                                <tr class="border-b border-slate-200">
+                                    <th class="text-left py-3 px-4 font-semibold text-slate-700">Event</th>
+                                    <th class="text-left py-3 px-4 font-semibold text-slate-700">Properties</th>
+                                    <th class="text-left py-3 px-4 font-semibold text-slate-700">Maps to</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-slate-600">
+                                <tr class="bg-slate-50"><td colspan="3" class="py-2 px-4 text-xs text-slate-500 italic">All events include <code>customer_segment: new | tenured</code></td></tr>
+                                <tr class="border-b border-slate-100"><td class="py-2.5 px-4 font-medium text-slate-800">savings_goal_set</td><td class="py-2.5 px-4">amount, source (preset|custom)</td><td class="py-2.5 px-4">Funnel, TTV</td></tr>
+                                <tr class="border-b border-slate-100"><td class="py-2.5 px-4 font-medium text-slate-800">term_selected</td><td class="py-2.5 px-4">term_years, apy</td><td class="py-2.5 px-4">Funnel</td></tr>
+                                <tr class="border-b border-slate-100"><td class="py-2.5 px-4 font-medium text-slate-800">bank_link_started</td><td class="py-2.5 px-4">step</td><td class="py-2.5 px-4">Funnel, drop-off</td></tr>
+                                <tr class="border-b border-slate-100"><td class="py-2.5 px-4 font-medium text-slate-800">bank_link_completed</td><td class="py-2.5 px-4">provider</td><td class="py-2.5 px-4">Funnel</td></tr>
+                                <tr class="border-b border-slate-100"><td class="py-2.5 px-4 font-medium text-slate-800">deposit_confirmed</td><td class="py-2.5 px-4">amount, is_initial</td><td class="py-2.5 px-4">North Star, AUM</td></tr>
+                                <tr class="border-b border-slate-100"><td class="py-2.5 px-4 font-medium text-slate-800">add_to_annuity_tapped</td><td class="py-2.5 px-4">amount, source</td><td class="py-2.5 px-4">Engagement, conversion</td></tr>
+                                <tr class="border-b border-slate-100"><td class="py-2.5 px-4 font-medium text-slate-800">money_flow_viewed</td><td class="py-2.5 px-4">months_shown</td><td class="py-2.5 px-4">Engagement</td></tr>
+                                <tr class="border-b border-slate-100"><td class="py-2.5 px-4 font-medium text-slate-800">funnel_step_abandoned</td><td class="py-2.5 px-4">step, time_on_step</td><td class="py-2.5 px-4">Drop-off, TTV</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-slate-800 mb-3">Derived Metrics</h3>
+                    <p class="text-slate-500 text-xs mb-2">All metrics calculated separately for <strong>new</strong> and <strong>tenured</strong> segments.</p>
+                    <ul class="space-y-2 text-slate-700 text-sm">
+                        <li><strong>Time-to-Value (TTV)</strong> — Time from first touch (page load / CTA click) to <code class="bg-slate-100 px-1 rounded">deposit_confirmed</code></li>
+                        <li><strong>Funnel conversion rate</strong> — % completing each step (goal → term → link → fund → connect)</li>
+                        <li><strong>Day-30 retention</strong> — % of users who funded and returned within 30 days</li>
+                        <li><strong>Net new inflow</strong> — Sum of deposits attributed to Savings Pulse by cohort</li>
+                    </ul>
+                </div>
+
+                <div class="pt-4 border-t border-slate-200">
+                    <h3 class="font-bold text-slate-800 mb-2">Ownership & Tools</h3>
+                    <p class="text-slate-600 text-sm">Analytics & Engineering own implementation. Beta uses A/B test framework for messaging variants. GA dashboards surface health, errors, conversion, and retention — with segment filters for new vs tenured.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+            <h2 class="text-2xl font-bold mb-6">Analytics Dashboard (Mock)</h2>
+            <p class="text-slate-600 mb-4">A mockup of the monitoring dashboard for Savings Pulse. Surfaces North Star, funnel health, and efficiency metrics — segmented by <strong>new</strong> and <strong>tenured</strong> customers.</p>
+            <p class="text-slate-500 text-sm mb-6"><strong>Comparison baseline:</strong> Percent change (↑ / ↓) = current 7-day period vs. prior 7-day period. Target = Beta → GA promotion threshold.</p>
+
+            <div class="rounded-xl border-2 border-slate-200 bg-slate-50/50 overflow-hidden">
+                <div class="bg-slate-800 px-6 py-3 flex items-center justify-between">
+                    <span class="text-white/90 font-medium text-sm">Savings Pulse Dashboard</span>
+                    <span class="text-slate-400 text-xs">Last 7 days • Beta cohort</span>
+                </div>
+                <div class="p-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="text-sm font-semibold text-slate-700 mb-3 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-blue-500"></span>New customers
+                            </h4>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="bg-white rounded-lg p-3 border border-slate-200 shadow-sm">
+                                    <p class="text-slate-500 text-xs font-medium uppercase tracking-wider">Net New Inflow</p>
+                                    <p class="text-xl font-bold text-slate-900 mt-1">$89.4K</p>
+                                    <p class="text-emerald-600 text-xs mt-1">↑ 18% vs prior 7 days</p>
+                                </div>
+                                <div class="bg-white rounded-lg p-3 border border-slate-200 shadow-sm">
+                                    <p class="text-slate-500 text-xs font-medium uppercase tracking-wider">Day-30 Retention</p>
+                                    <p class="text-xl font-bold text-slate-900 mt-1">62%</p>
+                                    <p class="text-slate-500 text-xs mt-1">Target: 65%</p>
+                                </div>
+                                <div class="bg-white rounded-lg p-3 border border-slate-200 shadow-sm">
+                                    <p class="text-slate-500 text-xs font-medium uppercase tracking-wider">Avg TTV</p>
+                                    <p class="text-xl font-bold text-slate-900 mt-1">5.1 min</p>
+                                </div>
+                                <div class="bg-white rounded-lg p-3 border border-slate-200 shadow-sm">
+                                    <p class="text-slate-500 text-xs font-medium uppercase tracking-wider">Funnel Completion</p>
+                                    <p class="text-xl font-bold text-slate-900 mt-1">28%</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-slate-700 mb-3 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-teal-500"></span>Tenured customers
+                            </h4>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="bg-white rounded-lg p-3 border border-slate-200 shadow-sm">
+                                    <p class="text-slate-500 text-xs font-medium uppercase tracking-wider">Net New Inflow</p>
+                                    <p class="text-xl font-bold text-slate-900 mt-1">$34.8K</p>
+                                    <p class="text-emerald-600 text-xs mt-1">↑ 8% vs prior 7 days</p>
+                                </div>
+                                <div class="bg-white rounded-lg p-3 border border-slate-200 shadow-sm">
+                                    <p class="text-slate-500 text-xs font-medium uppercase tracking-wider">Day-30 Retention</p>
+                                    <p class="text-xl font-bold text-slate-900 mt-1">81%</p>
+                                    <p class="text-slate-500 text-xs mt-1">Target: 65%</p>
+                                </div>
+                                <div class="bg-white rounded-lg p-3 border border-slate-200 shadow-sm">
+                                    <p class="text-slate-500 text-xs font-medium uppercase tracking-wider">Avg TTV</p>
+                                    <p class="text-xl font-bold text-slate-900 mt-1">2.4 min</p>
+                                </div>
+                                <div class="bg-white rounded-lg p-3 border border-slate-200 shadow-sm">
+                                    <p class="text-slate-500 text-xs font-medium uppercase tracking-wider">Funnel Completion</p>
+                                    <p class="text-xl font-bold text-slate-900 mt-1">52%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="px-6 pb-6 grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="text-sm font-semibold text-slate-700 mb-3">Funnel — New</h4>
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-3">
+                                <span class="text-slate-500 text-xs w-16">Goal set</span>
+                                <div class="flex-1 h-5 rounded-full bg-slate-200 overflow-hidden">
+                                    <div class="h-full rounded-full bg-blue-500" style="width: 100%"></div>
+                                </div>
+                                <span class="text-slate-700 text-xs font-medium w-12">892</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-slate-500 text-xs w-16">Funded</span>
+                                <div class="flex-1 h-5 rounded-full bg-slate-200 overflow-hidden">
+                                    <div class="h-full rounded-full bg-blue-500" style="width: 35%"></div>
+                                </div>
+                                <span class="text-slate-700 text-xs font-medium w-12">312</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-slate-500 text-xs w-16">Connected</span>
+                                <div class="flex-1 h-5 rounded-full bg-slate-200 overflow-hidden">
+                                    <div class="h-full rounded-full bg-blue-600" style="width: 28%"></div>
+                                </div>
+                                <span class="text-slate-700 text-xs font-medium w-12">250</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-semibold text-slate-700 mb-3">Funnel — Tenured</h4>
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-3">
+                                <span class="text-slate-500 text-xs w-16">Goal set</span>
+                                <div class="flex-1 h-5 rounded-full bg-slate-200 overflow-hidden">
+                                    <div class="h-full rounded-full bg-teal-500" style="width: 100%"></div>
+                                </div>
+                                <span class="text-slate-700 text-xs font-medium w-12">348</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-slate-500 text-xs w-16">Funded</span>
+                                <div class="flex-1 h-5 rounded-full bg-slate-200 overflow-hidden">
+                                    <div class="h-full rounded-full bg-teal-500" style="width: 58%"></div>
+                                </div>
+                                <span class="text-slate-700 text-xs font-medium w-12">202</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-slate-500 text-xs w-16">Connected</span>
+                                <div class="flex-1 h-5 rounded-full bg-slate-200 overflow-hidden">
+                                    <div class="h-full rounded-full bg-teal-600" style="width: 52%"></div>
+                                </div>
+                                <span class="text-slate-700 text-xs font-medium w-12">181</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="px-6 pb-6 grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="text-sm font-semibold text-slate-700 mb-3">Top Drop-off (New)</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between"><span class="text-slate-600">Term → Link bank</span><span class="font-medium text-amber-600">31%</span></div>
+                            <div class="flex justify-between"><span class="text-slate-600">Link bank → Fund</span><span class="font-medium text-amber-600">11%</span></div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-semibold text-slate-700 mb-3">Event Volume (last 24h)</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between"><span class="text-slate-600">New: savings_goal_set</span><span class="font-medium text-slate-800">218</span></div>
+                            <div class="flex justify-between"><span class="text-slate-600">Tenured: add_to_annuity_tapped</span><span class="font-medium text-slate-800">142</span></div>
+                            <div class="flex justify-between"><span class="text-slate-600">New: deposit_confirmed</span><span class="font-medium text-slate-800">62</span></div>
+                        </div>
                     </div>
                 </div>
             </div>
