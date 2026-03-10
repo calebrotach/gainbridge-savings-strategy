@@ -519,6 +519,68 @@
             </div>
         </section>
 
+        <section class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+            <h2 class="text-2xl font-bold mb-6">Build Plan (Vertical Slicing)</h2>
+            <p class="text-slate-600 mb-4">Each slice delivers an end-to-end, testable increment — UI, API, and persistence — rather than building layer by layer. Slices prioritize <strong>in-app features first</strong> to add value for all customers: tenured users get dashboard and add-to-annuity immediately; new users gain the same once onboarding is built.</p>
+            <p class="text-slate-500 text-sm mb-6"><strong>Vertical slice</strong> = one thin slice through the full stack (frontend → backend → data) that delivers a usable outcome.</p>
+
+            <div class="space-y-6">
+                <div class="flex gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <span class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">1</span>
+                    <div>
+                        <h3 class="font-bold text-slate-800">Slice 1: Bank Link</h3>
+                        <p class="text-slate-600 text-sm mt-1">Bank linking is likely already integrated elsewhere and can be reused. Confirm Plaid transaction data is flowing; wire into Savings Pulse flow if needed. User links bank; token stored.</p>
+                        <p class="text-slate-500 text-xs mt-2">Milestone: Transaction data confirmed flowing from Plaid; bank link available for Savings Pulse.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <span class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">2</span>
+                    <div>
+                        <h3 class="font-bold text-slate-800">Slice 2: Connected Dashboard</h3>
+                        <p class="text-slate-600 text-sm mt-1">Post-funding in-app view. Money flow visualization (spending vs. savings by month). Use existing/mock data for tenured customers; new customers see it once funded.</p>
+                        <p class="text-slate-500 text-xs mt-2">Milestone: Tenured and funded users see money flow; value delivered to all active customers.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <span class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">3</span>
+                    <div>
+                        <h3 class="font-bold text-slate-800">Slice 3: Add to Annuity</h3>
+                        <p class="text-slate-600 text-sm mt-1">One-tap deposit from dashboard. Add-to-annuity flow; compounding impact display ("$X today ≈ $Y by maturity"). Core engagement for tenured and new alike.</p>
+                        <p class="text-slate-500 text-xs mt-2">Milestone: Users can add funds from dashboard; compounding copy visible; incremental AUM flow enabled.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <span class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">4</span>
+                    <div>
+                        <h3 class="font-bold text-slate-800">Slice 4: Goal + Term</h3>
+                        <p class="text-slate-600 text-sm mt-1">User sets savings goal and selects term. UI stepper (steps 1–2), API endpoints, persistence. Onboarding for new customers.</p>
+                        <p class="text-slate-500 text-xs mt-2">Milestone: New users can complete goal and term selection; data persists.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <span class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">5</span>
+                    <div>
+                        <h3 class="font-bold text-slate-800">Slice 5: Initial Funding</h3>
+                        <p class="text-slate-600 text-sm mt-1">Deposit flow: confirm amount, initiate transfer. Integrate with payment/ACH provider. User funds account; onboarding completes.</p>
+                        <p class="text-slate-500 text-xs mt-2">Milestone: End-to-end onboarding (goal → term → link → fund) works; new users become funded and see dashboard.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <span class="flex-shrink-0 w-10 h-10 rounded-full bg-slate-400 text-white font-bold flex items-center justify-center text-sm">6</span>
+                    <div>
+                        <h3 class="font-bold text-slate-800">Slice 6: Analytics + Production Readiness</h3>
+                        <p class="text-slate-600 text-sm mt-1">Event tracking (per analytics plan), monitoring dashboards, error handling, compliance review. Load testing, support docs, incident playbook.</p>
+                        <p class="text-slate-500 text-xs mt-2">Milestone: Alpha-ready; analytics verified; go/no-go checklist complete.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-slate-200">
+                <h3 class="font-bold text-slate-800 mb-2">Slice dependencies</h3>
+                <p class="text-slate-600 text-sm">1 (bank link) first — confirm Plaid data flow; foundation for money flow. 2 and 3 (in-app) deliver value to tenured and funded users. 4 → 5 (onboarding) for new customers. 6 runs in parallel where possible.</p>
+            </div>
+        </section>
+
     </main>
 
 </body>
